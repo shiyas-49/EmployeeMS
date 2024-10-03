@@ -1,4 +1,4 @@
-import Employee from "../models/Employee";
+import Employee from "../models/Employee.js";
 
 const addEmployee = async (req, res) => {
     const {
@@ -11,11 +11,10 @@ const addEmployee = async (req, res) => {
         gender,
         courses,
         dob,
-        image, // Assuming this is a URL or path to the uploaded image
+        image,
     } = req.body;
 
     try {
-        // Check if an employee with the same email or employeeId already exists
         const existingEmployeeByEmail = await Employee.findOne({ email });
         const existingEmployeeById = await Employee.findOne({ employeeId });
 
@@ -27,7 +26,6 @@ const addEmployee = async (req, res) => {
             return res.status(400).json({ message: "Employee with this ID already exists." });
         }
 
-        // Create a new employee instance
         const newEmployee = new Employee({
             userId,
             employeeId,
@@ -41,14 +39,10 @@ const addEmployee = async (req, res) => {
             image,
         });
 
-        // Save the new employee to the database
         await newEmployee.save();
-
-        // Send a success response
         return res.status(201).json({ message: "Employee added successfully!", employee: newEmployee });
 
     } catch (error) {
-        // Handle any errors
         console.error("Error adding employee:", error);
         return res.status(500).json({ message: "An error occurred while adding the employee." });
     }

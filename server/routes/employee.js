@@ -1,9 +1,8 @@
-import expres from 'express'
-import authMIddlware from '../middleware/authMIddlware.js'
-import {addEmployee} from '../controllers/employeController.js'
+import express from 'express';
+import { addEmployee } from '../controllers/employeeController.js';
 
-const router =expres.Router()
+const router = express.Router();
 
-router.post('add', authMIddlware,addEmployee)
+router.post('/add', addEmployee);
 
-export default router
+export default router;
